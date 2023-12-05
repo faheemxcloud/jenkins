@@ -15,7 +15,7 @@ pipeline {
                         [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"
                     '''
                     // Install Node.js and npm
-                    sh 'nvm install 14.17.1'
+                    sh 'nvm install 21.1.0'
                     sh 'node --version'
                     sh 'npm --version'
 
