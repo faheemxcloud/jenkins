@@ -19,8 +19,6 @@ const patients = {
   patientPhoneNumber: () => cy.get('[aria-label="123-456-7890"]'),
 
   redirectsToPatientsPage: () => {
-    // patients.qaEnvironment().click();
-    // patients.startButton().click();
     patients.adminText().should("be.visible");
     patients.patientsTab().eq(8).click({ force: true });
     patients.patientsText().should("be.visible");

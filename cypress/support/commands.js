@@ -41,5 +41,5 @@ Cypress.Commands.add("bypassLogin", (url = "") => {
     JSON.stringify(Cypress.env("accessToken"))
   );
   cy.visit(url);
-  cy.wait(10000);
+  cy.wait(100000);
 });

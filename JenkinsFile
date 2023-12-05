@@ -29,8 +29,9 @@ pipeline {
                         nvm install 14.17.1
                         node --version
                         npm --version
-                        npm install
+                        npm install mochawesome
                         npx cypress run
+                        npx mochawesome
                     '''
                     sh customScript
                 }
@@ -41,6 +42,9 @@ pipeline {
     post {
         success {
             echo 'Pipeline succeeded! Do something here...'
+
+            // Add the following lines to publish the Mochawesome report
+            publishHTML([allowMissing: false, alwaysLinkToLastBuild: true, keepAll: true, reportDir: 'mochawesome-report', reportFiles: 'mochawesome.html', reportName: 'Mochawesome Report'])
         }
         failure {
             echo 'Pipeline failed! Do something here...'
