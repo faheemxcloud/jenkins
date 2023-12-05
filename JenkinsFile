@@ -11,12 +11,19 @@ pipeline {
         stage('Node Setup') {
             steps {
                 script {
-                    // Install NVM
+                    // Install NVM and configure environment
                     sh '''
                         curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.35.3/install.sh | bash
                         export NVM_DIR="${HOME}/.nvm"
                         [ -s "${NVM_DIR}/nvm.sh" ] && source "${NVM_DIR}/nvm.sh"
-                    '''
+                        '''
+                }
+            }
+        }
+
+        stage('Install and Test') {
+            steps {
+                script {
                     // Install Node.js and npm
                     sh 'nvm install 14.17.1'
                     sh 'node --version'
