@@ -1,7 +1,10 @@
 pipeline {
     agent any
+
     environment {
         CI = 'true'
+        NVM_DIR = "${HOME}/.nvm"
+        PATH = "${NVM_DIR}/current/bin:${PATH}"
     }
 
     stages {
@@ -11,11 +14,11 @@ pipeline {
                     // Install NVM
                     sh '''
                         curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.35.3/install.sh | bash
-                        export NVM_DIR="$HOME/.nvm"
-                        [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"
+                        export NVM_DIR="${HOME}/.nvm"
+                        [ -s "${NVM_DIR}/nvm.sh" ] && source "${NVM_DIR}/nvm.sh"
                     '''
                     // Install Node.js and npm
-                    sh 'nvm install 21.1.0'
+                    sh 'nvm install 14.17.1'
                     sh 'node --version'
                     sh 'npm --version'
 
