@@ -3,6 +3,7 @@ pipeline {
 
     environment {
         CI = 'true'
+        JVM_OPTS = '-Dfile.encoding=UTF-8'
     }
 
     stages {
@@ -29,6 +30,7 @@ pipeline {
                         nvm install 14.17.1
                         node --version
                         npm --version
+                        export JVM_OPTS="-Dfile.encoding=UTF-8"
                         npm install mochawesome
                         npx cypress run
                         npx mochawesome
