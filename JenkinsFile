@@ -5,9 +5,6 @@ pipeline {
     }
     
     stages {
-        stage ('Git Setup') {
-
-        }
         stage ('Node Setup'){
             steps{
             sh '''#!/bin/bash +x
@@ -21,7 +18,5 @@ pipeline {
             '''
             }
         }
-        stage ('Install Packages'){}
-        stage ('Run Cypress tests'){}
     }
 }
