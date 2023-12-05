@@ -1,22 +1,38 @@
 pipeline {
     agent any
-    environment{
+    environment {
         CI = 'true'
     }
-    
-    stages {
-        stage ('Node Setup'){
-            steps{
-            sh '''#!/bin/bash +x
-            set -o errexit
 
-            curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.35.3/install.sh | bash
-            source ~/.nvm/.nvm.sh
-            nvm install 21.1.0
-            npm install
-            npx cypress run
-            '''
+    stages {
+        stage('Node Setup') {
+            steps {
+                script {
+                    // Install NVM
+                    sh '''
+                        curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.35.3/install.sh | bash
+                        export NVM_DIR="$HOME/.nvm"
+                        [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"
+                    '''
+                    // Install Node.js and npm
+                    sh 'nvm install 14.17.1'
+                    sh 'node --version'
+                    sh 'npm --version'
+
+                    // Install project dependencies and run Cypress tests
+                    sh 'npm install'
+                    sh 'npx cypress run'
+                }
             }
+        }
+    }
+
+    post {
+        success {
+            echo 'Pipeline succeeded! Do something here...'
+        }
+        failure {
+            echo 'Pipeline failed! Do something here...'
         }
     }
 }
