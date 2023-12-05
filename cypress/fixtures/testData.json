@@ -1,0 +1,13 @@
+{
+  "addPatient": {
+    "firstName": "Mrr",
+    "middleName": "Faheem",
+    "lastName": "Mubasherr",
+    "medicalRecordNumber": "Mubasherr",
+    "emailAddress": "test@gmail.com",
+    "PhoneNumber": "+1 (230) 244-9616"
+  },
+  "adminUser": {
+    "searchUser": "Camilla"
+  }
+}
