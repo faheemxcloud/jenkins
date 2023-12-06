@@ -1,44 +1,53 @@
-import Admin from "../support/pages/admin.js";
-let data = null;
+import Admin from "../support/pages/admin.PO.js";
+
+// let data = null;
 describe("login", () => {
   beforeEach(() => {
-    cy.fixture("testData.json").then(function (_data) {
-      data = _data;
-    });
+    // cy.fixture("testData.json").then(function (_data) {
+    //   data = _data;
+    // });
 
     cy.bypassLogin("/#/admin");
-    cy.get("flt-glass-pane")
-      .shadow()
-      .find("flt-semantics-placeholder", { timeout: 30000 })
-      .click({ force: true });
+    cy.get("flt-glass-pane").shadow().find("flt-semantics-placeholder", { timeout: 30000 }).click({ force: true });
   });
 
-  it("add user", () => {
+  it("Add User", () => {
     Admin.cancelUserCreation();
-    Admin.addUser();
+    // Admin.addUser();
   });
-  //   it("verify added user", () => {
-  //     Admin.verifyAddedUser();
-  //   });
-  //   it("edit the added user", () => {
-  //     Admin.editUser();
-  //   });
-  //   it("reset password from edit user screen", () => {
-  //     Admin.resetpasswordFromEditUser();
-  //   });
-  //   it("verify the edited user", () => {
-  //     Admin.verifyEditedUser();
-  //   });
-  //   it("deactivate added user", () => {
-  //     Admin.deactivateUser();
-  //   });
-  //   it("deactivate added user", () => {
-  //     Admin.enableUser();
-  //   });
 
-  //   it("reset password of the added user", () => {
-  //     Admin.resetPassword();
-  //   });
+  // it("Verify Added User", () => {
+  //   Admin.verifyAddedUser();
+  // });
+
+  // it("Edit The Added User", () => {
+  //   Admin.editUser();
+  // });
+
+  // it("Reset Password From Edit User Screen", () => {
+  //   Admin.resetpasswordFromEditUser();
+  // });
+
+  // it("Deactivate User From Edit User Screen", () => {
+  //   Admin.deactivateUserFromEditUser();
+  // });
+
+  // it("Verify The Edited User", () => {
+  //   Admin.verifyEditedUser();
+  // });
+
+  // it("Enable The Added User", () => {
+  //   Admin.enableUser();
+  // });
+
+  // it("Deactivate Added User", () => {
+  //   Admin.deactivateUser();
+  // });
+
+  // it("Reset Password Of The Added User", () => {
+  //   Admin.resetPassword();
+  // });
+
   //   it("add user", () => {
   //     Admin.filters();
   //   });

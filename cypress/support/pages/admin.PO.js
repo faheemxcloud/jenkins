@@ -5,7 +5,7 @@ const firstName = faker.name.firstName();
 const lastName = faker.name.lastName();
 const email = firstName + lastName + "@swiftmedical.com";
 const phone = faker.number.int({ min: 1e14, max: 9e14 - 1 });
-console.log(lastName);
+
 const adminUser = {
   qaEnvironment: () => cy.get('[role="radio"]'),
   startButton: () => cy.get('[aria-label="Start"]'),
@@ -28,12 +28,11 @@ const adminUser = {
   closeLocationField: () => cy.get('[aria-label="IdentityOrg1LOC1 "]'),
   credentials: () => cy.get('[aria-label="Select Credentials"]'),
   credentialsType: () => cy.get('[aria-label="Certified Medical Assistant"]'),
-  updatedCredentialsType: () =>
-    cy.get('[aria-label="Wound Technology Assistant"]'),
+  updatedCredentialsType: () => cy.get('[aria-label="Wound Technology Assistant"]'),
   subLocationType: () => cy.get('[aria-label="IdentityOrg1LOC1SUB1"]'),
   saveButton: () => cy.get('[aria-label="Save"]'),
   searchField: () => cy.get('[aria-label="Search"]'),
-  listedUser: (name) => cy.get(`[aria-label="${name}"]`),
+  listedUser: name => cy.get(`[aria-label="${name}"]`),
   scrollScreen: () => cy.get("flt-semantics-scroll-overflow"),
   editButton: () => cy.get('[role="button"]'),
   editedTextFields: () => cy.get('[data-semantics-role="text-field"]'),
@@ -70,19 +69,20 @@ const verifyUser = {
   editedLastName: () => cy.get(`[aria-label="new${lastName}"]`),
   editedRole: () => cy.get('[aria-label="T3U"]'),
   editedCredentials: () => cy.get('[aria-label="WTA"]'),
-  userUpdatedSuccessMessage: () =>
-    cy.get(`[aria-label="${firstName} ${lastName} edited successfully"]`),
+  userUpdatedSuccessMessage: () => cy.get(`[aria-label="${firstName} ${lastName} edited successfully"]`),
 };
+
 function cancelUserCreation() {
   adminUser.createUserButton().click({ force: true });
   adminUser.scrollScreen().scrollIntoView({ duration: 500 }).wait(1000);
   adminUser.cancelButton().click({ force: true });
 }
+
 function addUser() {
   adminUser.createUserButton().should("be.visible");
   adminUser.searchField().should("be.visible");
   adminUser.filterButton().should("be.visible");
-  adminUser.createUserButton().click();
+  adminUser.createUserButton().click().wait(1000);
   adminUser.firstNameInputField().type(firstName, { force: true });
   adminUser.lastNameInputField().type(lastName, { force: true });
   adminUser.emailInputField().type(email, { force: true });
@@ -100,6 +100,7 @@ function addUser() {
   adminUser.saveButton().click({ force: true });
   adminUser.copyToClipBoardButton().click();
 }
+
 function verifyAddedUser() {
   adminUser.searchField().type(firstName, { force: true, delay: 500 });
   verifyUser.firstName().should("exist");
@@ -109,6 +110,7 @@ function verifyAddedUser() {
   verifyUser.role().should("be.visible");
   verifyUser.credentials().should("be.visible");
 }
+
 function editUser() {
   adminUser.searchField().type(firstName, { force: true, delay: 500 });
   adminUser.listedUser(firstName).should("be.visible");
@@ -139,6 +141,7 @@ function editUser() {
   adminUser.saveButton().click({ force: true }).wait(1000);
   //   verifyUser.userUpdatedSuccessMessage().should("exist");
 }
+
 function verifyEditedUser() {
   adminUser.searchField().type("new" + firstName, { force: true, delay: 500 });
   verifyUser.editedFirstName().should("exist");
@@ -147,6 +150,7 @@ function verifyEditedUser() {
   verifyUser.editedRole().should("exist");
   verifyUser.editedCredentials().should("exist");
 }
+
 function resetpasswordFromEditUser() {
   adminUser.searchField().type("new" + firstName, { force: true, delay: 500 });
   adminUser.scrollScreen().eq(1).scrollIntoView({ duration: 500 }).wait(500);
@@ -156,6 +160,17 @@ function resetpasswordFromEditUser() {
   adminUser.popupContinueButton().click();
   adminUser.copyToClipBoardButton().click();
 }
+
+function deactivateUserFromEditUser() {
+  adminUser.searchField().type("new" + firstName, { force: true, delay: 500 });
+  adminUser.scrollScreen().eq(1).scrollIntoView({ duration: 500 }).wait(500);
+  adminUser.editButton().eq(2).click({ force: true });
+  adminUser.scrollScreen().scrollIntoView({ duration: 500 }).wait(1000);
+  adminUser.deactivateUserButton().click();
+  adminUser.popupDeactivateButton().click();
+  adminUser.deactivateStatusButton().should("exist");
+}
+
 function deactivateUser() {
   adminUser.searchField().type("new" + firstName, { force: true, delay: 500 });
   adminUser.scrollScreen().eq(1).scrollIntoView({ duration: 500 }).wait(1000);
@@ -164,6 +179,7 @@ function deactivateUser() {
   adminUser.popupDeactivateButton().click();
   adminUser.deactivateStatusButton().should("exist");
 }
+
 function enableUser() {
   adminUser.searchField().type("new" + firstName, { force: true, delay: 500 });
   adminUser.scrollScreen().eq(1).scrollIntoView({ duration: 500 }).wait(1000);
@@ -172,6 +188,7 @@ function enableUser() {
   adminUser.popupEnableButton().click();
   adminUser.enableStatusButton().should("exist");
 }
+
 function filters() {
   adminUser.filterButton().click({ force: true });
   cy.get('[aria-label^="Show menu"]').eq(0).click().wait(10000);
@@ -193,6 +210,7 @@ function filters() {
   cy.get('[role="checkbox"]').eq(0).click();
   //   cy.get('[aria-label="APPLY"]').click();
 }
+
 function resetPassword() {
   adminUser.searchField().type("new" + firstName, { force: true, delay: 500 });
   adminUser.scrollScreen().eq(1).scrollIntoView({ duration: 500 }).wait(1000);
@@ -210,6 +228,7 @@ export default {
   editUser,
   verifyEditedUser,
   resetpasswordFromEditUser,
+  deactivateUserFromEditUser,
   deactivateUser,
   enableUser,
   resetPassword,

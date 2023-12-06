@@ -1,18 +1,15 @@
-import Patients from "../support/pages/patients";
-let data = null;
+import Patients from "../support/pages/patients.PO";
+// let data = null;
 describe("login", () => {
   before(() => {
-    cy.fixture("testData.json").then(function (_data) {
-      data = _data;
-    });
+    // cy.fixture("testData.json").then(function (_data) {
+    //   data = _data;
+    // });
     cy.bypassLogin("/#/admin");
-    cy.get("flt-glass-pane")
-      .shadow()
-      .find("flt-semantics-placeholder", { timeout: 30000 })
-      .click({ force: true });
+    cy.get("flt-glass-pane").shadow().find("flt-semantics-placeholder", { timeout: 30000 }).click({ force: true });
   });
 
-  it("add user.", () => {
-    Patients.addPatients(data.addPatient);
+  it("Add New Patient", () => {
+    Patients.addPatients();
   });
 });

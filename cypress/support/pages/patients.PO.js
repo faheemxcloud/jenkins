@@ -1,6 +1,12 @@
+import { faker } from "@faker-js/faker";
+const firstName = faker.name.firstName();
+const lastName = faker.name.lastName();
+const middleName = faker.name.middleName();
+const email = firstName + lastName + "@swiftmedical.com";
+const medicalRecordNumber = faker.number.int();
+const phoneNumber = faker.number.int({ min: 1e14, max: 9e14 - 1 });
+
 const patients = {
-  qaEnvironment: () => cy.get("#flt-semantic-node-9"),
-  startButton: () => cy.get('[aria-label="Start"]'),
   adminText: () => cy.get('[aria-label="Admin"]'),
   patientsTab: () => cy.get('flt-semantics[id^="flt-semantic-node-"]'),
   patientsText: () => cy.get('[aria-label="Patients"]'),
@@ -29,9 +35,9 @@ function addPatients(data) {
   patients.redirectsToPatientsPage();
   patients.addNewPatientsButton().should("be.visible");
   patients.addNewPatientsButton().click();
-  patients.patientsFirstNameField().type(data.firstName, { force: true });
-  patients.patientMiddleNameField().type(data.middleName, { force: true });
-  patients.patientsLastNameField().type(data.lastName, { force: true });
+  patients.patientsFirstNameField().type(firstName, { force: true });
+  patients.patientMiddleNameField().type(middleName, { force: true });
+  patients.patientsLastNameField().type(lastName, { force: true });
 
   cy.selectDateInCalendar("1980", "01", "01");
   patients.okButton().click({ force: true });
@@ -40,12 +46,10 @@ function addPatients(data) {
   patients.selectedGender().click({ force: true });
   patients.genderIdentity().click({ force: true });
   patients.selectedGender().click({ force: true });
-  patients
-    .medicalRecordNumber()
-    .type(data.medicalRecordNumber, { force: true });
+  patients.medicalRecordNumber().type(medicalRecordNumber, { force: true });
   patients.scrollScreen().scrollIntoView({ duration: 500 }).wait(1000);
-  patients.patientEmailAddress().type(data.emailAddress, { force: true });
-  patients.patientPhoneNumber().type(data.PhoneNumber, { force: true });
+  patients.patientEmailAddress().type(email, { force: true });
+  patients.patientPhoneNumber().type(phoneNumber, { force: true });
 }
 export default {
   patients,
