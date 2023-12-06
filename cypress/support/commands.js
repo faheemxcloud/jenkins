@@ -13,5 +13,5 @@ Cypress.Commands.add("bypassLogin", (url = "") => {
   });
   window.localStorage.setItem("flutter.PREF_AZURE_ACCESS_TOKEN", JSON.stringify(Cypress.env("accessToken")));
   cy.visit(url);
-  cy.wait(100000);
+  cy.wait(10000);
 });
